@@ -1,62 +1,29 @@
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import useClickOutside from "../useOnClickOutside";
-
-const CITY_ICON_BASE_URL = "cityCoats";
-
-const cities: CalcInputProps[] = [
-  {
-    img: `${CITY_ICON_BASE_URL}/almaty.svg`,
-    name: "Алматы",
-    priceValue: 1123213123,
-  },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-  { img: `/${CITY_ICON_BASE_URL}/almaty.svg`, name: "Алматы", priceValue: 100 },
-];
-
-const format: CalcInputProps[] = [
-  { img: `/crown.svg`, name: "Рекламная формат 1", priceValue: 777 },
-  { img: `/crown.svg`, name: "Рекламная позиция 2", priceValue: 20660 },
-  { img: `/crown.svg`, name: "Рекламная позиция 3", priceValue: 111 },
-  { img: `/crown.svg`, name: "Рекламная позиция 4", priceValue: 333 },
-  { img: `/crown.svg`, name: "Рекламная позиция 5", priceValue: 444 },
-  { img: `/crown.svg`, name: "Рекламная позиция 6", priceValue: 555 },
-  { img: `/crown.svg`, name: "Рекламная позиция 7", priceValue: 200 },
-  { img: `/crown.svg`, name: "Рекламная позиция 8", priceValue: 200 },
-  { img: `/crown.svg`, name: "Рекламная позиция 9", priceValue: 150 },
-  { img: `/crown.svg`, name: "Рекламная позиция 11", priceValue: 200 },
-  { img: `/crown.svg`, name: "Рекламная позиция 12", priceValue: 200 },
-  { img: `/crown.svg`, name: "Рекламная позиция 323", priceValue: 200 },
-];
-
+import type { mainDataType } from "../../../../App";
 
 interface CalcOuputPointProps {
   headline: string;
   value: string;
   withStar?: boolean;
+}
+
+interface calcBaseType {
+  name: string;
+  priceValue: number;
+}
+
+export interface CalcInputProps extends calcBaseType {
+  img?: string;
+  isChecked?: boolean;
+}
+
+export interface calcFormatsType extends CalcInputProps {
+  relatedItems: number[];
+}
+
+export interface calcPositionsType extends CalcInputProps {
+  id: number;
 }
 
 const CalcOuputPoint = ({ headline, value, withStar }: CalcOuputPointProps) => {
@@ -85,13 +52,6 @@ const ArrowIcon = ({ isOpen }: { isOpen: boolean }) => (
     <path d="M7 10l5 5 5-5z"></path>
   </svg>
 );
-
-export interface CalcInputProps {
-  img?: string;
-  isChecked?: boolean;
-  name: string;
-  priceValue: number;
-}
 
 const INPUT_MAIN_WRAPPER_STYLES =
   "relative max-w-[714px] select-none text-[18px]";
@@ -165,6 +125,11 @@ const MultiChoiceCalcInput = ({
     setCheckedData(newData);
   };
 
+  useEffect(() => {
+    setCheckedData(data);
+    setPrice([]);
+  }, [data]);
+
   useClickOutside(isOpen ? ref : null, closeBodyHandle);
   return (
     <div className={INPUT_MAIN_WRAPPER_STYLES} ref={ref}>
@@ -222,12 +187,14 @@ const CalcInput = ({
   placeholder,
   isSearch,
   setPrice,
+  setRelatedPositions,
 }: {
-  data: CalcInputProps[];
+  data: (CalcInputProps | calcFormatsType)[];
   defaultImage: string;
   placeholder: string;
   isSearch?: boolean;
   setPrice: (price: number) => void;
+  setRelatedPositions?: (formats: number[]) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -249,7 +216,12 @@ const CalcInput = ({
     }
   };
 
-  const setInputValueHandle = (value: string, price: number, img?: string) => {
+  const setInputValueHandle = (
+    value: string,
+    price: number,
+    img?: string,
+    relatedItems?: number[]
+  ) => {
     setIsOpen(false);
     setInputValue(value);
     setInputImage(img ? img : defaultImage);
@@ -259,6 +231,9 @@ const CalcInput = ({
       priceValue: price,
     });
     setPrice(price);
+    if (setRelatedPositions && relatedItems) {
+      setRelatedPositions(relatedItems);
+    }
   };
 
   const filteredData = isSearch
@@ -304,7 +279,12 @@ const CalcInput = ({
               className={DROPDOWN_POINT_STYLES}
               key={index}
               onClick={() =>
-                setInputValueHandle(el.name, el.priceValue, el.img)
+                setInputValueHandle(
+                  el.name,
+                  el.priceValue,
+                  el.img,
+                  "relatedItems" in el ? el.relatedItems : undefined
+                )
               }
             >
               {el.img && <img src={el.img} className="w-8 max-h-8" />}
@@ -318,13 +298,25 @@ const CalcInput = ({
   );
 };
 
-
-export const CalculatorMain = () => {
+export const CalculatorMain = ({ data }: { data: mainDataType }) => {
   const [cityPrice, setCityPrice] = useState<number | null>(null);
   const [formatPrice, setFormatPrice] = useState<number | null>(null);
+  const [relatedPositions, setRelatedPositions] = useState<number[] | null>(
+    null
+  );
   const [positionPrice, setPositionPrice] = useState<number[]>([]);
 
   let isReady = false;
+
+  console.log(data);
+
+  const filteredPositions = useMemo(() => {
+    if (!relatedPositions || relatedPositions.length === 0) {
+      return [];
+    }
+    return data.positions.filter((pos) => relatedPositions.includes(pos.id));
+  }, [relatedPositions, data.positions]);
+
 
   const positionsSum = positionPrice.reduce((sum, val) => sum + val, 0);
 
@@ -348,7 +340,7 @@ export const CalculatorMain = () => {
     <section className="mt-4 rounded-2xl bg-[#F4F4F4] box-border py-8 px-8 relative">
       <div className="space-y-3">
         <CalcInput
-          data={cities}
+          data={data.cities}
           defaultImage="pin.svg"
           placeholder="Қаланы таңдаңыз"
           isSearch
@@ -356,16 +348,17 @@ export const CalculatorMain = () => {
         />
         {cityPrice && (
           <CalcInput
-            data={format}
+            data={data.formats}
             defaultImage="crown.svg"
             placeholder="Жарнама форматын таңдаңыз"
             setPrice={setFormatPrice}
+            setRelatedPositions={setRelatedPositions}
           />
         )}
 
         {formatPrice && (
           <MultiChoiceCalcInput
-            data={format}
+            data={filteredPositions}
             placeholder="Жарнамалық позицияларды таңдаңыз"
             setPrice={setPositionPrice}
           />

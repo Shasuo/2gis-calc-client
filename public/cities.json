@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Алматы",
+    "priceValue": 12500,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Нұр-Сұлтан",
+    "priceValue": 11800,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Шымкент",
+    "priceValue": 9600,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Ақтау",
+    "priceValue": 10300,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Атырау",
+    "priceValue": 10700,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Қарағанды",
+    "priceValue": 9200,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Павлодар",
+    "priceValue": 9800,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Семей",
+    "priceValue": 8900,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Тараз",
+    "priceValue": 9400,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Өскемен",
+    "priceValue": 10100,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Қостанай",
+    "priceValue": 9700,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Ақтөбе",
+    "priceValue": 10500,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Петропавл",
+    "priceValue": 8800,
+    "img": "/cityCoats/almaty.svg"
+  },
+  {
+    "name": "Талдықорған",
+    "priceValue": 9900,
+    "img": "/cityCoats/almaty.svg"
+  }
+]

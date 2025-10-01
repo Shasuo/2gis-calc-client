@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Рекламная формат 1",
+    "priceValue": 7773,
+    "img": "/crown.svg",
+    "relatedItems": [2, 4, 0, 1]
+  },
+  {
+    "name": "Рекламная формат 2",
+    "priceValue": 100,
+    "img": "/crown.svg",
+    "relatedItems": [1, 5]
+  },
+  {
+    "name": "Рекламная формат 3",
+    "priceValue": 1050,
+    "img": "/crown.svg",
+    "relatedItems": [0, 3, 5, 2]
+  },
+  {
+    "name": "Рекламная формат 4",
+    "priceValue": 1400,
+    "img": "/crown.svg",
+    "relatedItems": [4, 1]
+  }
+]
