@@ -236,6 +236,15 @@ const CalcInput = ({
     }
   };
 
+  const switchOpenHandle = () =>
+    setIsOpen((prev) => {
+      const newIsOpen = !prev;
+      if (newIsOpen && inputRef.current) {
+        inputRef.current.focus();
+      }
+      return newIsOpen;
+    });
+
   const filteredData = isSearch
     ? data.filter((city) =>
         city.name.toLowerCase().includes(inputValue.toLowerCase())
@@ -248,7 +257,7 @@ const CalcInput = ({
     <div className={INPUT_MAIN_WRAPPER_STYLES} ref={ref}>
       <div
         className={INPUT_MAIN_STYLES}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={switchOpenHandle}
         style={{ maxHeight: "56px" }}
       >
         <div className="flex items-center gap-3 w-full">
@@ -274,24 +283,28 @@ const CalcInput = ({
       </div>
       {isOpen && (
         <div className={DROPDOWN_MAIN_STYLES}>
-          {filteredData.map((el, index) => (
-            <div
-              className={DROPDOWN_POINT_STYLES}
-              key={index}
-              onClick={() =>
-                setInputValueHandle(
-                  el.name,
-                  el.priceValue,
-                  el.img,
-                  "relatedItems" in el ? el.relatedItems : undefined
-                )
-              }
-            >
-              {el.img && <img src={el.img} className="w-8 max-h-8" />}
+          {filteredData.length > 0 ? (
+            filteredData.map((el, index) => (
+              <div
+                className={DROPDOWN_POINT_STYLES}
+                key={index}
+                onClick={() =>
+                  setInputValueHandle(
+                    el.name,
+                    el.priceValue,
+                    el.img,
+                    "relatedItems" in el ? el.relatedItems : undefined
+                  )
+                }
+              >
+                {el.img && <img src={el.img} className="w-8 max-h-8" />}
 
-              <div>{el.name}</div>
-            </div>
-          ))}
+                <div>{el.name}</div>
+              </div>
+            ))
+          ) : (
+            <div className="text-[#B9B9B9] pl-4">Қаланы таңдаңыз</div>
+          )}
         </div>
       )}
     </div>
@@ -316,7 +329,6 @@ export const CalculatorMain = ({ data }: { data: mainDataType }) => {
     }
     return data.positions.filter((pos) => relatedPositions.includes(pos.id));
   }, [relatedPositions, data.positions]);
-
 
   const positionsSum = positionPrice.reduce((sum, val) => sum + val, 0);
 
